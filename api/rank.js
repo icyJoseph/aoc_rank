@@ -1,8 +1,10 @@
-const formatter = new Intl.DateTimeFormat("sv-SE", {
-  hour: "numeric",
-  minute: "numeric",
-  second: "numeric"
-});
+const createFormatter = (timeZone) =>
+  new Intl.DateTimeFormat("sv-SE", {
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    timeZone
+  });
 
 const atLeastOneStar = (member) =>
   Object.keys(member.completion_day_level).length > 0;
@@ -13,7 +15,7 @@ const hoistCompletionDayLevel = ({ name, completion_day_level }) => ({
 });
 
 // delta: time between `first` star and `second` star
-const calculateTimes = (day) => {
+const calculateTimes = (day, formatter) => {
   const def = { first: null, second: "", delta: "", raw: Infinity };
   if (!day) return { ...def };
 
@@ -50,6 +52,9 @@ const handler = (req, res) => {
 
   try {
     const { body } = req;
+    const { "x-time-zone": timeZone = "Europe/Stockholm" } = req.headers;
+
+    const formatter = createFormatter(timeZone);
     const memberStars = Object.values(body.members)
       .filter(atLeastOneStar)
       .map(hoistCompletionDayLevel);
@@ -59,7 +64,7 @@ const handler = (req, res) => {
         day,
         entries: memberStars
           .map((member) => ({
-            ...calculateTimes(member[day]),
+            ...calculateTimes(member[day], formatter),
             name: member.name === null ? "Unknown" : member.name
           }))
           .sort((a, b) => a.raw - b.raw)
