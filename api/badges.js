@@ -65,10 +65,6 @@ const badges = (req, res) => {
 
           const first = Number(current["1"].get_star_ts) * 1000;
 
-          if (first - dayStart < 0) {
-            console.log({ first, dayStart, day });
-          }
-
           if (!current["2"])
             return {
               first,
