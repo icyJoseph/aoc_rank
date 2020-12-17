@@ -1,18 +1,9 @@
-const createFormatter = (timeZone) =>
-  new Intl.DateTimeFormat("sv-SE", {
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-    timeZone
-  });
-
-const atLeastOneStar = (member) =>
-  Object.keys(member.completion_day_level).length > 0;
-
-const hoistCompletionDayLevel = ({ name, completion_day_level }) => ({
-  ...completion_day_level,
-  name
-});
+import {
+  atLeastOneStar,
+  createFormatter,
+  formatTimeDiff,
+  hoistCompletionDayLevel
+} from "../utils";
 
 // delta: time between `first` star and `second` star
 const calculateTimes = (day, formatter) => {
@@ -25,14 +16,8 @@ const calculateTimes = (day, formatter) => {
 
   const second = new Date(Number(day["2"].get_star_ts) * 1000);
 
-  const diff = (second - first) / 1000;
-  const minutes = Math.floor(diff / 60);
-  const seconds = diff % 60;
-
-  const readable =
-    minutes < 9999
-      ? `${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`
-      : "+9999";
+  const diff = second - first;
+  const readable = formatTimeDiff(diff);
 
   const delta = `Δ ${readable}${" ".repeat(7 - readable.length)} min`;
 
@@ -44,7 +29,7 @@ const calculateTimes = (day, formatter) => {
   };
 };
 
-const handler = (req, res) => {
+const timeDiffRank = (req, res) => {
   if (req.method !== "POST") {
     res.statusCode = 403;
     return res.end();
@@ -73,6 +58,9 @@ const handler = (req, res) => {
 
     const boards = stats.reduce((prev, curr) => {
       const { day, entries } = curr;
+
+      if (entries.filter((entry) => entry.first).length === 0) return prev;
+
       return `${prev}\nDay ${day}\n${entries
         .filter((entry) => entry.first)
         .map(
@@ -84,7 +72,7 @@ const handler = (req, res) => {
             } `
         )
         .join("\n")}\n`;
-    }, "");
+    }, `${body.event || ""} day by day\n`);
 
     res.setHeader("Content-Type", "text/plain");
     return res.send(boards);
@@ -94,4 +82,4 @@ const handler = (req, res) => {
   }
 };
 
-export default handler;
+export default timeDiffRank;

@@ -20,17 +20,23 @@ function App() {
         Intl?.DateTimeFormat()?.resolvedOptions()?.timeZone ??
         "Europe/Stockholm";
 
-      const text = await fetch("/api/rank", {
+      const board = await fetch("/api/rank", {
         method: "POST",
         body,
         headers: { "Content-Type": "application/json", "x-time-zone": timeZone }
       }).then((res) => res.text());
 
-      if (text === "error") {
+      const badges = await fetch("/api/badges", {
+        method: "POST",
+        body,
+        headers: { "Content-Type": "application/json", "x-time-zone": timeZone }
+      }).then((res) => res.text());
+
+      if (board === "error" || badges === "error") {
         return setError(true);
       }
       setError(false);
-      return setResult(text);
+      return setResult(`${board}\n${badges}`);
     } catch (e) {
       setError(true);
     }
