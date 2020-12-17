@@ -16,10 +16,14 @@ function App() {
 
       const body = value.trim();
 
+      const timeZone =
+        Intl?.DateTimeFormat()?.resolvedOptions()?.timeZone ??
+        "Europe/Stockholm";
+
       const text = await fetch("/api/rank", {
         method: "POST",
         body,
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json", "x-time-zone": timeZone }
       }).then((res) => res.text());
 
       if (text === "error") {
