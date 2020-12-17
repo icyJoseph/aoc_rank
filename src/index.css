@@ -1,0 +1,73 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #f8f8f8;
+  color: #212738;
+  min-height: 100vh;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+header {
+  margin-left: 8px;
+  padding-top: 8px;
+}
+
+h1 {
+  font-weight: 300;
+  font-size: 2rem;
+  margin-top: 0;
+  display: inline;
+}
+
+main {
+  margin-left: 8px;
+  margin-bottom: 32px;
+}
+
+pre {
+  margin-left: 4px;
+}
+
+textarea {
+  background: transparent;
+  resize: none;
+  width: 80%;
+  max-width: 45ch;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+p {
+  color: #225560;
+}
+
+footer {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  text-align: center;
+  background: #f8f8f8;
+  padding: 4px;
+  font-weight: 300;
+  color: #225560;
+}
+
+.warning {
+  color: rgb(255, 80, 80);
+}
+
+.emoji {
+  font-size: 2rem;
+  font-weight: 400;
+  font-family: apple color emoji, segoe ui emoji, noto color emoji,
+    android emoji, emojisymbols, emojione mozilla, twemoji mozilla,
+    segoe ui symbol;
+}
