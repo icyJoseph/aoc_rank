@@ -5,6 +5,10 @@ import {
   withName
 } from "../utils";
 
+const earlyBirdDefault = { name: "-", oneStar: "-", stars: "-" };
+const startChildDefault = { name: "-", twoStars: "-", stars: "-" };
+const inTheZoneDefault = { name: "-", diff: "-", stars: "-" };
+
 const badges = (req, res) => {
   if (req.method !== "POST") {
     res.statusCode = 403;
@@ -142,9 +146,21 @@ const badges = (req, res) => {
       inTheZone
     };
 
-    const [earlyBird1st, earlyBird2nd, earlyBird3rd] = badges.earlyBird;
-    const [starChild1st, starChild2nd, starChild3rd] = badges.starChild;
-    const [inTheZone1st, inTheZone2nd, inTheZone3rd] = badges.inTheZone;
+    const [
+      earlyBird1st = earlyBirdDefault,
+      earlyBird2nd = earlyBirdDefault,
+      earlyBird3rd = earlyBirdDefault
+    ] = badges.earlyBird;
+    const [
+      starChild1st = startChildDefault,
+      starChild2nd = startChildDefault,
+      starChild3rd = startChildDefault
+    ] = badges.starChild;
+    const [
+      inTheZone1st = inTheZoneDefault,
+      inTheZone2nd = inTheZoneDefault,
+      inTheZone3rd = inTheZoneDefault
+    ] = badges.inTheZone;
 
     const board = `
 ${event} Badges
