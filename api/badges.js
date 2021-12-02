@@ -147,65 +147,40 @@ const badges = (req, res) => {
       inTheZone
     };
 
-    const [
-      earlyBird1st = earlyBirdDefault,
-      earlyBird2nd = earlyBirdDefault,
-      earlyBird3rd = earlyBirdDefault
-    ] = badges.earlyBird;
-    const [
-      starChild1st = startChildDefault,
-      starChild2nd = startChildDefault,
-      starChild3rd = startChildDefault
-    ] = badges.starChild;
-    const [
-      inTheZone1st = inTheZoneDefault,
-      inTheZone2nd = inTheZoneDefault,
-      inTheZone3rd = inTheZoneDefault
-    ] = badges.inTheZone;
+    const earlyBirdBadges = badges.earlyBird.reduce((prev, curr) => {
+      return `${prev}
+      ${curr.name}${" ".repeat(30 - curr.name.length)} ${curr.oneStar}`;
+    }, "");
+
+    const startChildBadges = badges.starChild.reduce((prev, curr) => {
+      return `${prev}
+      ${curr.name}${" ".repeat(30 - curr.name.length)} ${curr.twoStars}`;
+    }, "");
+
+    const inTheZoneBadges = badges.inTheZone.reduce((prev, curr) => {
+      return `${prev}
+      ${curr.name}${" ".repeat(30 - curr.name.length)} ${curr.diff}`;
+    }, "");
 
     const board = `
 ${event} Badges
     
 Early Bird
     Fastest to one star (min)
-
-    ${earlyBird1st.name}${" ".repeat(30 - earlyBird1st.name.length)} ${
-      earlyBird1st.oneStar
-    }
-    ${earlyBird2nd.name}${" ".repeat(30 - earlyBird2nd.name.length)} ${
-      earlyBird2nd.oneStar
-    }
-    ${earlyBird3rd.name}${" ".repeat(30 - earlyBird3rd.name.length)} ${
-      earlyBird3rd.oneStar
-    }
+    ${earlyBirdBadges}
 
 Star Child
     Fastest to two stars (min)
-
-    ${starChild1st.name}${" ".repeat(30 - starChild1st.name.length)} ${
-      starChild1st.twoStars
-    }
-    ${starChild2nd.name}${" ".repeat(30 - starChild2nd.name.length)} ${
-      starChild2nd.twoStars
-    }
-    ${starChild3rd.name}${" ".repeat(30 - starChild3rd.name.length)} ${
-      starChild3rd.twoStars
-    }
+    ${startChildBadges}
 
 In the Zone
     Once you get one star, how long does it take for two? (min)
+    ${inTheZoneBadges}
 
-    ${inTheZone1st.name}${" ".repeat(30 - inTheZone1st.name.length)} ${
-      inTheZone1st.diff
-    }
-    ${inTheZone2nd.name}${" ".repeat(30 - inTheZone2nd.name.length)} ${
-      inTheZone2nd.diff
-    }
-    ${inTheZone3rd.name}${" ".repeat(30 - inTheZone3rd.name.length)} ${
-      inTheZone3rd.diff
-    }
-
-* Members are sorted, first by time, and then by stars obtained.
+* Members are sorted: 
+  - first by time, 
+  - then by stars obtained, 
+  - and most importantly, for FUN!
 `;
 
     res.setHeader("Content-Type", "text/plain");
