@@ -45,20 +45,16 @@ function App() {
   return (
     <Fragment>
       <header>
-        <span>
-          <h1>[AoC]: Between the stars</h1>{" "}
-          <span className="emoji" role="img" aria-label="star">
-            ⭐
-          </span>
-          <span className="emoji" role="img" aria-label="star">
-            ⭐
-          </span>
+        <h1>[AoC]: Between the stars</h1>{" "}
+        <span className="emoji" role="img" aria-label="star">
+          ⭐
         </span>
-
+        <span className="emoji" role="img" aria-label="star">
+          ⭐
+        </span>
         <p>
           Ranks leaderboard members by time taken between first and second stars
         </p>
-
         <form onSubmit={onSubmit}>
           <textarea
             rows="1"

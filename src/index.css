@@ -1,3 +1,11 @@
+html {
+  max-width: 70ch;
+  padding: 3em 1em;
+  margin: auto;
+  line-height: 1.75;
+  font-size: 1.25em;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -16,7 +24,6 @@ code {
 }
 
 header {
-  margin-left: 8px;
   padding-top: 8px;
 }
 
@@ -28,12 +35,7 @@ h1 {
 }
 
 main {
-  margin-left: 8px;
   margin-bottom: 32px;
-}
-
-pre {
-  margin-left: 4px;
 }
 
 textarea {
@@ -53,6 +55,7 @@ footer {
   position: fixed;
   width: 100%;
   bottom: 0;
+  left: 0;
   text-align: center;
   background: #f8f8f8;
   padding: 4px;
