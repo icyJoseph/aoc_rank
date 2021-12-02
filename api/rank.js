@@ -2,7 +2,8 @@ import {
   atLeastOneStar,
   createFormatter,
   formatTimeDiff,
-  hoistCompletionDayLevel
+  hoistCompletionDayLevel,
+  withName
 } from "../utils";
 
 // delta: time between `first` star and `second` star
@@ -40,7 +41,9 @@ const timeDiffRank = (req, res) => {
     const { "x-time-zone": timeZone = "Europe/Stockholm" } = req.headers;
 
     const formatter = createFormatter(timeZone);
-    const memberStars = Object.values(body.members)
+    const memberStars = Object.entries(body.members)
+      .map(([id, data]) => ({ ...data, id }))
+      .map(withName)
       .filter(atLeastOneStar)
       .map(hoistCompletionDayLevel);
 
@@ -50,7 +53,7 @@ const timeDiffRank = (req, res) => {
         entries: memberStars
           .map((member) => ({
             ...calculateTimes(member[day], formatter),
-            name: member.name === null ? "Unknown" : member.name
+            name: member.name
           }))
           .sort((a, b) => a.raw - b.raw)
       };

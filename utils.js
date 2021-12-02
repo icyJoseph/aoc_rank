@@ -24,4 +24,8 @@ export const formatTimeDiff = (diff) => {
     : "+9999";
 };
 
-export const withName = ({ name }) => name !== null && name !== undefined;
+export const withName = ({ id, name, ...rest }) => ({
+  ...rest,
+  id,
+  name: name || `anonymous user #${id}`
+});

@@ -20,9 +20,10 @@ const badges = (req, res) => {
 
     const { event, members } = body;
 
-    const withStars = Object.values(members)
-      .filter(atLeastOneStar)
-      .filter(withName);
+    const withStars = Object.entries(members)
+      .map(([id, data]) => ({ ...data, id }))
+      .map(withName)
+      .filter(atLeastOneStar);
 
     const memberStars = withStars.map(hoistCompletionDayLevel);
 
